@@ -541,7 +541,7 @@
       <field type="uint8_t" name="type" enum="LANDING_TARGET_TYPE">Type of target</field>
     </message>
     <!-- Tilt angle -->
-    <message id="512" name="TILT_ANGLE">
+    <message id="513" name="TILT_ANGLE">
       <description>Tilt angle command.</description>
       <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp (time since system boot).</field>
       <field type="float" name="tilt_fl" units="deg">Front left tilt angle</field>
