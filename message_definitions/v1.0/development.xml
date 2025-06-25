@@ -237,14 +237,14 @@
       </entry>
       <entry value="32" name="MAV_BATTERY_STATUS_FLAGS_REQUIRES_SERVICE">
         <description>
-          Battery requires service (not safe to fly). 
+          Battery requires service (not safe to fly).
           This is set at vendor discretion.
           It is likely to be set for most faults, and may also be set according to a maintenance schedule (such as age, or number of recharge cycles, etc.).
         </description>
       </entry>
       <entry value="64" name="MAV_BATTERY_STATUS_FLAGS_BAD_BATTERY">
         <description>
-          Battery is faulty and cannot be repaired (not safe to fly). 
+          Battery is faulty and cannot be repaired (not safe to fly).
           This is set at vendor discretion.
           The battery should be disposed of safely.
         </description>
@@ -539,6 +539,15 @@
       <field type="float[4]" name="q_target">Quaternion of the target's orientation from the target's frame to the TARGET_OBS_FRAME (w, x, y, z order, zero-rotation is 1, 0, 0, 0)</field>
       <field type="float[4]" name="q_sensor">Quaternion of the sensor's orientation from TARGET_OBS_FRAME to vehicle-carried NED. (Ignored if set to (0,0,0,0)) (w, x, y, z order, zero-rotation is 1, 0, 0, 0)</field>
       <field type="uint8_t" name="type" enum="LANDING_TARGET_TYPE">Type of target</field>
+    </message>
+    <!-- Tilt angle -->
+    <message id="512" name="TILT_ANGLE">
+      <description>Tilt angle command.</description>
+      <field type="uint32_t" name="time_boot_ms" units="ms">Timestamp (time since system boot).</field>
+      <field type="float" name="tilt_fl" units="deg">Front left tilt angle</field>
+      <field type="float" name="tilt_fr" units="deg">Front right tilt angle</field>
+      <field type="float" name="tilt_rl" units="deg">Right left tilt angle</field>
+      <field type="float" name="tilt_rr" units="deg">Right right tilt angle</field>
     </message>
   </messages>
 </mavlink>

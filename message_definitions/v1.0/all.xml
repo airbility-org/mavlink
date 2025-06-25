@@ -19,18 +19,13 @@
   <include>test.xml</include>
   <include>ualberta.xml</include>
   <include>uAvionix.xml</include>
-  <!-- tilt_ctrl.xml range of IDs:
-    messages: 18000 - 18049
-    commands: ? - ?
-  -->
-  <include>tilt_ctrl.xml</include>
   <!-- storm32.xml range of IDs:
     messages: 60000 - 60049
     commands: 60000 - 60049
   -->
   <include>storm32.xml</include>
   <!-- AVSSUAS.xml range of IDs:
-    messages: 60050 - 60099 
+    messages: 60050 - 60099
     commands: 60050 - 60099
   -->
   <include>AVSSUAS.xml</include>
