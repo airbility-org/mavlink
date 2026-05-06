@@ -1,3 +1,43 @@
+# Airbility MAVLink (커스터마이징)
+
+본 저장소는 [mavlink/mavlink](https://github.com/mavlink/mavlink) upstream을 fork하여 Airbility 기체 운용에 필요한 메시지 및 메타데이터를 추가/수정한 버전입니다. 아래는 자체 작업 내역만 정리한 것이며, MAVLink 자체에 대한 설명은 그 아래 원문 README를 참고하세요.
+
+## 브랜치 운영 정책
+
+PX4 펌웨어와 QGroundControl(GCS)에서 사용하는 MAVLink 버전이 서로 다르기 때문에, 사용 대상별로 브랜치를 분리해서 유지합니다. **메시지/메타데이터를 추가·수정할 때는 두 브랜치 모두에 동일하게 반영해야 합니다.**
+
+| 브랜치 | 대상 | 비고 |
+| --- | --- | --- |
+| `develop/mavlink-for-px4-v1.14.3` | PX4 v1.14.3 펌웨어 | 기본(default) 브랜치 |
+| `develop/mavlink-for-qgc-v5.0.1` | QGroundControl v5.0.1 | |
+
+### 동기화 방식
+
+지금까지의 PR 기록을 보면 보통 PX4 브랜치에서 먼저 작업한 뒤 QGC 브랜치로 머지하는 흐름이 사용됐습니다 (예: PR #6, #7, #8은 모두 `develop/mavlink-for-px4-v1.14.3` → `develop/mavlink-for-qgc-v5.0.1` 방향). 양 브랜치가 어긋날 경우를 대비해 반대 방향(`qgc → px4`) cross-merge도 함께 사용되어 왔습니다. 새 변경사항을 올릴 때는 다음을 점검하세요.
+
+- PX4 브랜치에서 작업/PR 후, 동일 변경을 QGC 브랜치에도 반영했는지
+- 메시지 ID, 필드 정의, dialect 위치(예: `development.xml` vs `tilt_ctrl.xml`)가 두 브랜치에서 일치하는지
+
+## 자체 변경 사항 요약
+
+upstream 분기점은 commit `18955a04`이며, 이후 추가/수정된 항목은 다음과 같습니다.
+
+### 1. 커스텀 메시지 추가 (`message_definitions/v1.0/development.xml`)
+
+| Message | ID | 용도 |
+| --- | --- | --- |
+| `TILT_ANGLE_SETPOINT` | 513 | 4개 로터(FL/FR/RL/RR)의 tilt 각도 명령 |
+| `TILT_STATUS` | 514 | tilt 실시간 상태 (각도, 각속도, 전압, 전류, 온도, 다이나믹셀 realtime tick, error status) |
+| `CONTROL_SURFACE_CMD` | 515 | 제어면 명령 (좌/우 에일러론, 좌/우 러더베이터) |
+
+각 메시지의 상세 필드 정의는 [customization.md](customization.md)를 참고하세요.
+
+### 2. Actuator 메타데이터 확장 (`component_metadata/actuators.example.json`)
+
+각 PWM 출력 채널에 **Neutral 값** 필드(`PWM_MAIN_NTRL${i}`, `PWM_AUX_NTRL${i}`)를 추가했습니다. PWM_MAIN 그룹과 PWM_AUX 그룹의 5개 위치에 적용되어 있습니다.
+
+---
+
 [![Build Status](https://github.com/mavlink/mavlink/workflows/Test%20and%20deploy/badge.svg)](https://github.com/mavlink/mavlink/actions?query=branch%3Amaster)
 
 # MAVLink
